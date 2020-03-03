@@ -4,10 +4,10 @@ RSpec.describe 'Privacy' do
   let(:old_password) { 'old pasword' }
   let!(:user) { create(:user, password: old_password) }
 
-   before do
-     login_as(user)
-     settings_page.load
-   end
+  before do
+    login_as(user)
+    settings_page.load
+  end
 
   context "open settings page" do
     it 'goes to settings page' do
@@ -29,6 +29,7 @@ RSpec.describe 'Privacy' do
       it 'cannot change the email' do
         settings_page.p_email.set('opapapapapa')
         settings_page.p_save_email_button.click
+
         expect(page).to have_current_path('/settings')   
         expect(settings_page).to have_text('Can`t update email')
       end
@@ -36,6 +37,7 @@ RSpec.describe 'Privacy' do
       it 'cannot change the email too long' do
         settings_page.p_email.set('1@gmail.com'*20)
         settings_page.p_save_email_button.click
+
         expect(page).to have_current_path('/settings')   
         expect(settings_page).to have_text('Can`t update email')
       end
@@ -43,6 +45,7 @@ RSpec.describe 'Privacy' do
       it 'can change the email' do
         settings_page.p_email.set('pupkin@gmail.com')
         settings_page.p_save_email_button.click
+
         expect(page).to have_current_path('/settings')   
         expect(settings_page).to have_text('Email was update')
       end
@@ -51,6 +54,7 @@ RSpec.describe 'Privacy' do
       it 'cannot change the password 1 field' do
         settings_page.p_old_password.set('abrakadabra')
         settings_page.p_save_password_button.click
+
         expect(page).to have_current_path('/settings')   
         expect(settings_page).to have_text('Can`t update password')
       end
@@ -59,8 +63,8 @@ RSpec.describe 'Privacy' do
         settings_page.p_old_password.set('abrakadabra')
         settings_page.p_new_password.set('abrakadabra2')
         settings_page.p_confirm_password.set('abrakadabra2')
-        settings_p
-        age.p_save_password_button.click 
+        settings_page.p_save_password_button.click 
+
         expect(page).to have_current_path('/settings') 
         expect(settings_page).to have_text('Can`t update password')
       end
@@ -70,6 +74,7 @@ RSpec.describe 'Privacy' do
         settings_page.p_new_password.set('12')
         settings_page.p_confirm_password.set('12')
         settings_page.p_save_password_button.click 
+
         expect(page).to have_current_path('/settings') 
         expect(settings_page).to have_text('Can`t update password')
       end
@@ -80,6 +85,7 @@ RSpec.describe 'Privacy' do
         settings_page.p_new_password.set('.~!@$!@#!@$!')
         settings_page.p_confirm_password.set('.~!@$!@#!@$!')
         settings_page.p_save_password_button.click 
+
         expect(page).to have_current_path('/settings') 
         expect(settings_page).to have_text('Can`t update password')
       end
@@ -89,16 +95,17 @@ RSpec.describe 'Privacy' do
         settings_page.p_new_password.set('1'*300)
         settings_page.p_confirm_password.set('1'*300)
         settings_page.p_save_password_button.click 
+
         expect(page).to have_current_path('/settings') 
         expect(settings_page).to have_text('Can`t update password')
       end
-  
   
       it 'can change the password' do
         settings_page.p_old_password.set(old_password)
         settings_page.p_new_password.set('abrakadabra2')
         settings_page.p_confirm_password.set('abrakadabra2')
         settings_page.p_save_password_button.click  
+        
         expect(page).to have_current_path('/users/sign_in')
         expect(page).to have_text('You need to sign in or sign up before continuing.')
       end
