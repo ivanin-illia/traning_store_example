@@ -66,6 +66,62 @@ RSpec.describe 'Settings' do
       expect(settings_page.shipping_zip_field.value).to eq(address.zip)
       expect(settings_page.shipping_country_select.value).to eq("USA")
       expect(settings_page.shipping_phone_field.value).to eq(address.phone)
-    end  
+    end
+
+    it 'billing add new billing address' do 
+      home_page.user_email.hover
+      home_page.settings.click
+      settings_page.billing_save_button.click
+
+      expect(settings_page).to have_text ("can't be blank")
+      expect(settings_page.text("can't be blank").count).to eq 7
+    end
+
+    it 'shipping validation cant be blank' do  
+      home_page.user_email.hover
+      home_page.settings.click
+      settings_page.shipping_save_button.click
+  
+      expect(settings_page).to have_text ("can't be blank")
+      expect(settings_page.text("can't be blank").count).to eq 7
+    end
+    
+    it 'billing validation over max possible chars' do 
+      home_page.user_email.hover
+      home_page.settings.click
+      settings_page.billing_first_name.set('1'*51)
+      settings_page.billing_last_name.set('1'*51)
+      settings_page.billing_adress_field.set('1'*21)
+      settings_page.billing_city_field.set('1'*51)
+      settings_page.billing_zip_field.set('1'*6)
+      settings_page.billing_country_select.select("USA")
+      settings_page.billing_phone_field.set('1'*14)
+      settings_page.billing_save_button.click
+
+      expect(settings_page).to have_content ("is too long (maximum is 50 characters)") 
+      expect(settings_page).to have_content ("is too long (maximum is 20 characters)")
+      expect(settings_page).to have_content ("is too long (maximum is 5 characters)")
+      expect(settings_page).to have_content ("is too long (maximum is 13 characters)")
+      expect(settings_page.billing_country_select.value).to eq("USA")
+    end
+
+    it 'shipping validation over max possible chars' do 
+      home_page.user_email.hover
+      home_page.settings.click
+      settings_page.shipping_first_name.set('1'*51)
+      settings_page.shipping_last_name.set('1'*51)
+      settings_page.shipping_adress_field.set('1'*21)
+      settings_page.shipping_city_field.set('1'*51)
+      settings_page.shipping_zip_field.set('1'*6)
+      settings_page.shipping_country_select.select("USA")
+      settings_page.shipping_phone_field.set('1'*14)
+      settings_page.shipping_save_button.click
+
+      expect(settings_page).to have_content ("is too long (maximum is 50 characters)")
+      expect(settings_page).to have_content ("is too long (maximum is 20 characters)")
+      expect(settings_page).to have_content ("is too long (maximum is 5 characters)")
+      expect(settings_page).to have_content ("is too long (maximum is 13 characters)")
+      expect(settings_page.shipping_country_select.value).to eq("USA")
+    end
   end
-end   
+end    
