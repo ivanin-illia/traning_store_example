@@ -5,9 +5,9 @@ FactoryBot.define do
     address { FFaker::AddressUS.street_address }
     city { FFaker::AddressUS.city }
     zip{ FFaker::AddressUS.zip_code }
-    #country { %w[Ukraine Germane USA UK].sample }
+    country { %w[Ukraine Germane USA UK].sample }
     phone { FFaker::PhoneNumber.phone_number }
-    #addressable { association(:user) }
+    addressable { association(:user) }
   end
 end
 

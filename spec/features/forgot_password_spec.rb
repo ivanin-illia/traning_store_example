@@ -2,9 +2,8 @@ RSpec.describe 'RestorePassword' do
   let(:sign_in_page) { SignInPage.new }
   let(:restore_password_page) { RestorePasswordPage.new }
   let!(:user) { create(:user) }
-
   before { sign_in_page.load }
-
+  
   context 'restore password' do
 
     it 'sends link to restore password' do

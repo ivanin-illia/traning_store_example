@@ -1,8 +1,8 @@
 class SettingsPage < BasePage
   set_url '/settings'
   element :settings_title, 'h1'
-  element :tab_link_a, 'a[href="#address"]'
-  element :tab_link_p, 'a[href="#privacy"]'
+  element :tab_link_address, 'a[href="#address"]'
+  element :tab_link_privacy, 'a[href="#privacy"]'
   
   #ADDRESS
   #billing
@@ -26,8 +26,8 @@ class SettingsPage < BasePage
   element :shipping_save_button, '#new_shipping_address > input.btn'
 
   #PRIVACY
-  element :p_email, '#email_form_email'
-  element :p_save_email_button, '#edit_email_form > input.btn'
+  element :privacy_email, '#email_form_email'
+  element :privacy_save_email_button, '#edit_email_form > input.btn'
   element :p_choose_file_button, 'input[type=button]'
   element :p_save_image_button, '#edit_upload_image > input.btn'
   element :p_remove_account_button, '#delete_account'
@@ -35,5 +35,5 @@ class SettingsPage < BasePage
   element :p_old_password, '#password_form_current_password'
   element :p_new_password, '#password_form_password'
   element :p_confirm_password, '#password_form_password_confirmation'
-  element :p_save_password_button, '#edit_password_form > input[type=submit]'
+  element :privacy_save_password_button, '#edit_password_form > input[type=submit]'
 end

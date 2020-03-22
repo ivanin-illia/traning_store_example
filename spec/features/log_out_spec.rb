@@ -3,25 +3,18 @@ RSpec.describe 'LogOut' do
   let(:home_page) { HomePage.new }
   let(:user) { create(:user) }
 
-  before { sign_in_page.load }
+  before do
+    login_as(user)
+    home_page.load
+  end
 
   context 'from the home page' do
 
-      it 'user logs out' do
-      sign_in_page.email.set(user.email)
-      sign_in_page.password.set(user.password)
-      sign_in_page.login_button.click
-
-      expect(home_page).to be_displayed
-      expect(home_page.success_flash.text).to eq('Signed in successfully.')
-      expect(home_page.user_email.text).to eq(user.email)
-      expect(home_page).to have_no_sign_up_link
-      expect(home_page).to have_no_login_link
-
+    it 'user logs out' do
       home_page.user_email.hover
       home_page.logout.click
 
-      expect(home_page.success_flash.text).to eq('Signed out successfully.')
+      expect(home_page.success_flash.text).to eq((I18n.t('devise.sessions.signed_out')))
       expect(home_page).to have_no_user_email
     end
   end

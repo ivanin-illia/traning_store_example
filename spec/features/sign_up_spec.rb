@@ -18,6 +18,3 @@ RSpec.describe 'SignUp' do
     end
   end
 end
-
-
-
